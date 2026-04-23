@@ -1,93 +1,80 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Unlock, Mail, Lock, User, Terminal, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { User, Mail, Lock, ArrowRight, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import '../Auth.css';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
-      <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-magenta-500/10 pointer-events-none" />
-      
+    <div className="auth-container">
+      <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-gray-500 hover:text-black font-medium transition-colors">
+        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm icon-bubble bubble-float-slow">
+          <Home size={18} />
+        </div>
+        Return Home
+      </Link>
+
+      {/* Floating decorative bubbles in background */}
+      <div className="absolute w-32 h-32 bg-pastel-blue rounded-full blur-xl opacity-50 top-20 left-40 bubble-float"></div>
+      <div className="absolute w-40 h-40 bg-pastel-pink rounded-full blur-xl opacity-50 bottom-20 right-40 bubble-float-alt"></div>
+      <div className="absolute w-24 h-24 bg-accent-lime rounded-full blur-xl opacity-40 top-1/2 right-1/4 bubble-float-slow"></div>
+
       <motion.div 
         layout
-        className="glass-morphism w-full max-w-md p-10 overflow-hidden relative"
+        className="auth-card"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
       >
-        <div className="absolute top-0 right-0 p-4">
-          <Terminal size={14} className="text-white/20" />
-        </div>
-
-        <div className="text-center mb-10">
-          <motion.div 
-            initial={{ scale: 0 }} 
-            animate={{ scale: 1 }} 
-            className="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-cyan-400/30"
-          >
-            <Unlock className="text-cyan-400" />
-          </motion.div>
-          <h1 className="text-3xl font-bold nebula-font mb-2">
-            {isLogin ? "Neural Access" : "Consciousness Registration"}
+        <div className="auth-header">
+          <div className="auth-icon-container icon-bubble bubble-float-alt">
+            <User size={32} />
+          </div>
+          <h1 className="auth-title display-font">
+            {isLogin ? "Welcome Back" : "Create Account"}
           </h1>
-          <p className="text-gray-500 text-sm">
-            {isLogin ? "Provide your decryption keys." : "Welcome to the collective."}
+          <p className="auth-subtitle">
+            {isLogin ? "Enter your details to access your account." : "Join Nitec to discover premium audio."}
           </p>
         </div>
 
-        <form className="space-y-6">
+        <form className="auth-form">
           {!isLogin && (
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-              <label className="block text-xs font-bold text-gray-400 uppercase mb-2 ml-1">Entity Name</label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-                <input 
-                  type="text" 
-                  placeholder="X-742-NEO"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-cyan-500 outline-none transition-all text-white"
-                />
+            <motion.div className="form-group" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
+              <label>Full Name</label>
+              <div className="input-wrapper">
+                <User className="input-icon" size={18} />
+                <input type="text" placeholder="John Doe" className="auth-input" />
               </div>
             </motion.div>
           )}
 
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2 ml-1">Coordinate ID (Email)</label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-              <input 
-                type="email" 
-                placeholder="nomad@nebula.com"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-cyan-500 outline-none transition-all text-white"
-              />
+          <div className="form-group">
+            <label>Email Address</label>
+            <div className="input-wrapper">
+              <Mail className="input-icon" size={18} />
+              <input type="email" placeholder="hello@example.com" className="auth-input" />
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2 ml-1">Access Protocol (Password)</label>
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-              <input 
-                type="password" 
-                placeholder="••••••••"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-cyan-500 outline-none transition-all text-white"
-              />
+          <div className="form-group">
+            <label>Password</label>
+            <div className="input-wrapper">
+              <Lock className="input-icon" size={18} />
+              <input type="password" placeholder="••••••••" className="auth-input" />
             </div>
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.02, backgroundColor: "rgb(0, 243, 255)", color: "black" }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full py-4 rounded-xl border border-cyan-500/50 text-cyan-400 font-bold tracking-widest flex items-center justify-center gap-2 transition-colors"
-          >
-            {isLogin ? "INITIATE LOGIN" : "START REGISTRATION"} <ArrowRight size={18} />
-          </motion.button>
+          <button type="button" className="auth-btn icon-bubble">
+            {isLogin ? "Sign In" : "Sign Up"} <ArrowRight size={18} />
+          </button>
         </form>
 
-        <div className="mt-8 text-center">
-          <button 
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-xs text-gray-500 hover:text-cyan-400 transition-colors uppercase tracking-widest"
-          >
-            {isLogin ? "Request New Coordinates?" : "Already Synchronized?"}
+        <div className="auth-toggle">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
+          <button onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "Sign up" : "Log in"}
           </button>
         </div>
       </motion.div>

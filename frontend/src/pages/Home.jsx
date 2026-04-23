@@ -1,111 +1,191 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import NebulaCard from '../components/NebulaCard';
+import { Search, ShoppingBag, Heart, ArrowUpRight, Play, Settings, Box, Share2, Music, CheckCircle, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import ProductCard from '../components/ProductCard';
 import AiAssistant from '../components/AiAssistant';
-import { Sparkles, TrendingUp } from 'lucide-react';
+import '../Home.css';
 
 const Home = () => {
-  const [products] = useState([
-    {
-      id: 1,
-      title: "Nebula Glass Pro",
-      price: 899,
-      description: "Augmented reality eyewear with 16K retinal display and neural link integration.",
-      image: "https://images.unsplash.com/photo-1573148195900-7845fcc9992a?auto=format&fit=crop&q=80&w=800",
-      hypeLevel: 92
-    },
-    {
-      id: 2,
-      title: "Pulse Sneakers",
-      price: 249,
-      description: "Self-lacing biometric footwear with reactive kinetic cushioning and RGB trim.",
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
-      hypeLevel: 78
-    },
-    {
-      id: 3,
-      title: "Quantum Drive v4",
-      price: 1599,
-      description: "Tetrabyte storage module with instantaneous data retrieval and zero-latency.",
-      image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800",
-      hypeLevel: 85
-    },
-    {
-      id: 4,
-      title: "Cipher Key",
-      price: 120,
-      description: "Unbreakable hardware encryption for the modern nomad. Titanium finish.",
-      image: "https://images.unsplash.com/photo-1633265486064-086b21935fcc?auto=format&fit=crop&q=80&w=800",
-      hypeLevel: 64
-    }
-  ]);
-
   return (
-    <div className="min-h-screen px-4 py-8 md:px-12 lg:px-24">
-      <header className="mb-16">
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-4 mb-4"
-        >
-          <Sparkles className="text-cyan-400" />
-          <span className="nebula-font text-cyan-400 text-sm tracking-widest">Nexus Marketplace</span>
-        </motion.div>
+    <div className="home-wrapper">
+      {/* Navigation */}
+      <nav className="navbar">
+        <Link to="/" className="logo">
+          <div className="w-8 h-8 bg-black text-white rounded-md flex items-center justify-center font-bold text-lg">N</div>
+          nitec.
+        </Link>
         
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold mb-6"
-        >
-          THE <span className="neon-text-gradient">FUTURE</span> <br/> 
-          OF COMMERCE.
-        </motion.h1>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-gray-400 max-w-xl text-lg leading-relaxed"
-        >
-          Welcome to the Nebula Shop. We don't just sell products; we curate the tools for your evolution. 
-          Powered by hyper-intelligent AI and decentralized commerce.
-        </motion.p>
-      </header>
-
-      {/* Hype Section */}
-      <section className="mb-16 overflow-hidden">
-        <div className="flex items-center gap-2 mb-8">
-          <TrendingUp className="text-magenta-500" />
-          <h2 className="text-xl">Trending in the Multiverse</h2>
+        <div className="search-bar">
+          <input type="text" placeholder="Search products..." />
+          <button className="search-btn icon-bubble">
+            <Search size={16} />
+          </button>
         </div>
-        
-        <div className="flex gap-8 overflow-x-auto pb-8 mask-gradient no-scrollbar">
-          {products.map((product) => (
-            <NebulaCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
 
-      {/* Main Catalog */}
-      <section>
-        <h2 className="text-xl mb-8 flex items-center gap-2">
-          <div className="w-12 h-[1px] bg-cyan-500" /> All Artifacts
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <NebulaCard key={`cat-${product.id}`} product={product} />
-          ))}
-          {products.map((product) => (
-            <NebulaCard key={`cat2-${product.id}`} product={product} />
-          ))}
+        <div className="nav-actions">
+          <Link to="/cart" className="icon-btn icon-bubble bubble-float-slow">
+            <ShoppingBag size={20} />
+          </Link>
+          <button className="icon-btn heart icon-bubble bubble-float-alt">
+            <Heart size={20} fill="#ff4d4f" />
+          </button>
+          <Link to="/auth" className="user-profile hover:opacity-80 transition-opacity">
+            <span>Ryman Alex</span>
+            <img 
+              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" 
+              alt="User profile" 
+              className="user-avatar"
+            />
+          </Link>
         </div>
-      </section>
+      </nav>
 
-      <AiAssistant />
+      {/* Main Grid Layout */}
+      <div className="home-grid">
+        {/* Left Hero Section */}
+        <div className="main-hero-section">
+          <div className="hero-card">
+            <div className="hero-content">
+              <div className="music-tag">
+                <Music size={16} /> Music is Classic
+              </div>
+              
+              <h1 className="hero-title display-font">Sequoia Inspiring Musico.</h1>
+              
+              <div className="hero-subtitle-container">
+                <span className="hero-number">01</span>
+                <div className="w-16 h-px bg-gray-300"></div>
+                <div className="hero-subtitle-text">
+                  <h4>Clear Sounds</h4>
+                  <p>Making your dream music come true stay with Sequios Sounds!</p>
+                </div>
+              </div>
+              
+              <Link to="/product/1" className="view-btn icon-bubble">
+                View All Products
+                <span className="btn-arrow icon-bubble bubble-float-alt">
+                  <ArrowUpRight size={20} />
+                </span>
+              </Link>
+
+              <div className="social-links mt-auto">
+                <span>Follow us on:</span>
+                <div className="social-icon icon-bubble bubble-float-slow"><span className="text-sm font-bold">X</span></div>
+                <div className="social-icon icon-bubble bubble-float"><Play size={14} /></div>
+                <div className="social-icon icon-bubble bubble-float-alt"><Share2 size={14} /></div>
+                <div className="social-icon icon-bubble bubble-float-slow"><span className="text-sm font-bold">in</span></div>
+              </div>
+            </div>
+
+            <div className="hero-image-container bubble-float">
+              {/* Floating decorative bubbles */}
+              <div className="floating-dot dot-1 bubble-float-slow"></div>
+              <div className="floating-dot dot-2 bubble-float-alt"></div>
+              <div className="floating-dot dot-3 bubble-float"></div>
+              <div className="floating-dot dot-4 bubble-float-slow"></div>
+              
+              <img src="/blue_headphones.png" alt="Sequoia Headphones" className="hero-image" />
+            </div>
+          </div>
+        </div>
+
+        {/* Right Sidebar Section */}
+        <div className="right-sidebar">
+          {/* Popular Colors */}
+          <div className="color-card">
+            <h3>Popular Colors</h3>
+            <div className="color-options">
+              <div className="color-circle" style={{background: '#3b82f6'}}></div>
+              <div className="color-circle" style={{background: '#f97316'}}></div>
+              <div className="color-circle" style={{background: '#22c55e'}}></div>
+              <div className="color-circle" style={{background: '#ef4444'}}></div>
+              <div className="color-circle" style={{background: '#06b6d4'}}></div>
+            </div>
+          </div>
+
+          {/* Product Cards */}
+          <ProductCard 
+            product={{
+              id: 2,
+              title: "New Gen X-Bud",
+              image: "/white_earbuds.png"
+            }} 
+          />
+          
+          <ProductCard 
+            product={{
+              id: 3,
+              title: "Light Grey Surface Headphone",
+              subtitle: "Boosted with bass",
+              image: "/vr_headset.png"
+            }} 
+          />
+        </div>
+      </div>
+
+      {/* Bottom Row */}
+      <div className="bottom-cards mt-6">
+        <div className="product-card half-card">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h3 className="font-semibold">More Products</h3>
+              <p className="text-xs text-gray-500">460 plus items.</p>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center icon-bubble bubble-float-slow">
+              <Heart size={16} fill="#ff4d4f" color="#ff4d4f" />
+            </div>
+          </div>
+          <div className="mini-products">
+            <Link to="/product/2" className="mini-product icon-bubble hover-enlarge"><img src="/white_earbuds.png" alt="item" /></Link>
+            <Link to="/product/3" className="mini-product icon-bubble hover-enlarge"><img src="/vr_headset.png" alt="item" /></Link>
+            <Link to="/product/1" className="mini-product icon-bubble hover-enlarge"><img src="/blue_headphones.png" alt="item" /></Link>
+          </div>
+        </div>
+
+        <div className="stats-card">
+          <div className="avatars">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" alt="user" />
+            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100" alt="user" />
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100" alt="user" />
+          </div>
+          <div className="stat-circle icon-bubble bubble-float-alt">
+            <h3>5m+</h3>
+            <p>Downloads</p>
+          </div>
+          <div className="rating-pill mt-4 icon-bubble bubble-float-slow">
+            <Star size={14} fill="#fbbf24" color="#fbbf24" /> 4.6 reviews
+          </div>
+        </div>
+
+        <div className="product-card large-card">
+          <div className="flex justify-between mb-4 relative z-10">
+            <div className="pastel-tag bg-white">
+              <Heart size={12} fill="#ff4d4f" color="#ff4d4f" /> Popular
+            </div>
+            <Link to="/product/1" className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm icon-bubble bubble-float">
+              <ArrowUpRight size={16} />
+            </Link>
+          </div>
+          <h3 className="font-semibold text-lg relative z-10 w-1/2">Listening Has Been Released</h3>
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden rounded-r-xl bubble-float-slow">
+            <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800" alt="hand holding device" className="w-full h-full object-cover opacity-90" />
+            <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+              <Star size={12} fill="#fbbf24" color="#fbbf24" /> 4.7
+            </div>
+          </div>
+          <div className="flex gap-2 mt-auto relative z-10">
+            <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-gray-100 bubble-float">
+               <img src="/white_earbuds.png" className="w-full h-full object-cover" alt="item" />
+            </div>
+            <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-gray-100 bubble-float-alt">
+               <img src="/vr_headset.png" className="w-full h-full object-cover" alt="item" />
+            </div>
+          </div>
+        </div>
+      </div>
       
-      {/* Dynamic Background Noise/Film Grain */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      <AiAssistant />
     </div>
   );
 };

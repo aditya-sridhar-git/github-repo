@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import CartPage from './pages/CartPage';
 import Auth from './pages/Auth';
+import './App.css';
 
 function App() {
   return (
