@@ -105,7 +105,6 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
-  height: calc(100vh - 140px);
   min-height: 700px;
 }
 

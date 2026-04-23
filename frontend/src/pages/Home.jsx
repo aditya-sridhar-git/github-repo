@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, ShoppingBag, Heart, ArrowUpRight, Play, Settings, Box, Share2, Music, CheckCircle, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,14 @@ import AiAssistant from '../components/AiAssistant';
 import '../Home.css';
 
 const Home = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isLiked, setIsLiked] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('#3b82f6');
+
+  const handleSearch = () => {
+    if (searchQuery) alert('Searching for: ' + searchQuery);
+  };
+
   return (
     <div className="home-wrapper">
       {/* Navigation */}
@@ -17,8 +25,14 @@ const Home = () => {
         </Link>
         
         <div className="search-bar">
-          <input type="text" placeholder="Search products..." />
-          <button className="search-btn icon-bubble">
+          <input 
+            type="text" 
+            placeholder="Search products..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          />
+          <button className="search-btn icon-bubble" onClick={handleSearch}>
             <Search size={16} />
           </button>
         </div>
@@ -27,8 +41,11 @@ const Home = () => {
           <Link to="/cart" className="icon-btn icon-bubble bubble-float-slow">
             <ShoppingBag size={20} />
           </Link>
-          <button className="icon-btn heart icon-bubble bubble-float-alt">
-            <Heart size={20} fill="#ff4d4f" />
+          <button 
+            className="icon-btn heart icon-bubble bubble-float-alt"
+            onClick={() => setIsLiked(!isLiked)}
+          >
+            <Heart size={20} fill={isLiked ? "#ff4d4f" : "none"} color={isLiked ? "#ff4d4f" : "#1a1a1a"} />
           </button>
           <Link to="/auth" className="user-profile hover:opacity-80 transition-opacity">
             <span>Ryman Alex</span>
@@ -96,11 +113,18 @@ const Home = () => {
           <div className="color-card">
             <h3>Popular Colors</h3>
             <div className="color-options">
-              <div className="color-circle" style={{background: '#3b82f6'}}></div>
-              <div className="color-circle" style={{background: '#f97316'}}></div>
-              <div className="color-circle" style={{background: '#22c55e'}}></div>
-              <div className="color-circle" style={{background: '#ef4444'}}></div>
-              <div className="color-circle" style={{background: '#06b6d4'}}></div>
+              {['#3b82f6', '#f97316', '#22c55e', '#ef4444', '#06b6d4'].map(color => (
+                <div 
+                  key={color}
+                  className="color-circle" 
+                  style={{
+                    background: color,
+                    transform: selectedColor === color ? 'scale(1.2)' : 'none',
+                    borderColor: selectedColor === color ? '#1a1a1a' : 'white'
+                  }}
+                  onClick={() => setSelectedColor(color)}
+                ></div>
+              ))}
             </div>
           </div>
 
@@ -168,8 +192,8 @@ const Home = () => {
             </Link>
           </div>
           <h3 className="font-semibold text-lg relative z-10 w-1/2">Listening Has Been Released</h3>
-          <div className="absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden rounded-r-xl bubble-float-slow">
-            <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=800" alt="hand holding device" className="w-full h-full object-cover opacity-90" />
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden rounded-r-xl bubble-float-slow bg-gradient-to-br from-pastel-mint to-blue-200 flex items-center justify-center">
+            <img src="/blue_headphones.png" alt="hand holding device" className="w-[80%] h-[80%] object-contain" />
             <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
               <Star size={12} fill="#fbbf24" color="#fbbf24" /> 4.7
             </div>
