@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  /* Pastel Palette */
+  --bg-main: #f0f2f0;
+  --bg-card: #ffffff;
+  --bg-card-alt: #eef1ec;
+  --bg-accent: #d8e4c8;
+  --bg-accent-hover: #cddbb5;
+  
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  
+  --pastel-green: #c8dbb5;
+  --pastel-blue: #b3d4e8;
+  --pastel-pink: #e8c4d4;
+  --pastel-lavender: #c9c4e8;
+  --pastel-peach: #e8d4b3;
+  --pastel-mint: #b5dbd0;
+  
+  --accent-lime: #c5d94e;
+  --accent-dark: #2a2a2a;
+  
+  --border-light: rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+  
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, .display-font {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-alt {
+  background: var(--bg-card-alt);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+}
+
+.soft-shadow {
+  box-shadow: var(--shadow-sm);
+}
+
+.pastel-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+/* Floating bubble animation for icons */
+@keyframes float-bubble {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  25% { transform: translateY(-8px) scale(1.03); }
+  50% { transform: translateY(-4px) scale(1.01); }
+  75% { transform: translateY(-10px) scale(1.04); }
+}
+
+@keyframes float-bubble-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(2deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@keyframes float-bubble-alt {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-6px) translateX(3px); }
+  50% { transform: translateY(-10px) translateX(-2px); }
+  75% { transform: translateY(-4px) translateX(4px); }
+}
+
+@keyframes gentle-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Bubbles now stagnant, enlarging on hover */
+.bubble-float {
+  /* animation removed */
+}
+
+.bubble-float-slow {
+  /* animation removed */
+}
+
+.bubble-float-alt {
+  /* animation removed */
+}
+
+.icon-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon-bubble:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 3px;
+}
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

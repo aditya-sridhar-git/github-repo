@@ -1,0 +1,138 @@
+.page-container {
+  padding: 40px 24px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--text-primary);
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.product-image-container {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.product-image-large {
+  width: 100%;
+  max-width: 500px;
+  mix-blend-mode: multiply;
+}
+
+.product-info h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.product-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stock-tag {
+  font-size: 14px;
+  background: var(--pastel-mint);
+  color: #166534;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.product-desc {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.spec-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--bg-main);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.add-to-cart-btn {
+  flex: 1;
+  background: var(--accent-lime);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 16px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.add-to-cart-btn:hover {
+  transform: translateY(-2px);
+  background: #d4e75d;
+}
+
+.wishlist-btn {
+  padding: 0 24px;
+  background: white;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+
+.wishlist-btn:hover {
+  transform: translateY(-2px);
+}
