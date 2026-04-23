@@ -5,7 +5,12 @@ const Product = require('../models/Product');
 // GET all products
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
+    const { search } = req.query;
+    let query = {};
+    if (search) {
+      query.title = { $regex: search, $options: 'i' };
+    }
+    const products = await Product.find(query);
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: 'Error retrieving from the Void', error: err.message });

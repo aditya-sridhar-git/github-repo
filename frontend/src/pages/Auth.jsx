@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, ArrowRight, Home } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../Auth.css';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      if (isLogin) {
+        const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        navigate('/');
+      } else {
+        const res = await axios.post('http://localhost:5000/api/auth/signup', { username: name, email, password });
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        navigate('/');
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Matrix authentication failed');
+    }
+  };
 
   return (
     <div className="auth-container">
@@ -39,13 +65,15 @@ const Auth = () => {
           </p>
         </div>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
+          {error && <div className="text-red-500 mb-4 text-sm bg-red-50 p-2 rounded">{error}</div>}
+          
           {!isLogin && (
             <motion.div className="form-group" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
               <label>Full Name</label>
               <div className="input-wrapper">
                 <User className="input-icon" size={18} />
-                <input type="text" placeholder="John Doe" className="auth-input" />
+                <input type="text" placeholder="John Doe" className="auth-input" value={name} onChange={e => setName(e.target.value)} required={!isLogin} />
               </div>
             </motion.div>
           )}
@@ -54,7 +82,7 @@ const Auth = () => {
             <label>Email Address</label>
             <div className="input-wrapper">
               <Mail className="input-icon" size={18} />
-              <input type="email" placeholder="hello@example.com" className="auth-input" />
+              <input type="email" placeholder="hello@example.com" className="auth-input" value={email} onChange={e => setEmail(e.target.value)} required />
             </div>
           </div>
 
@@ -62,11 +90,11 @@ const Auth = () => {
             <label>Password</label>
             <div className="input-wrapper">
               <Lock className="input-icon" size={18} />
-              <input type="password" placeholder="••••••••" className="auth-input" />
+              <input type="password" placeholder="••••••••" className="auth-input" value={password} onChange={e => setPassword(e.target.value)} required />
             </div>
           </div>
 
-          <button type="button" className="auth-btn icon-bubble">
+          <button type="submit" className="auth-btn icon-bubble flex items-center justify-center gap-2">
             {isLogin ? "Sign In" : "Sign Up"} <ArrowRight size={18} />
           </button>
         </form>

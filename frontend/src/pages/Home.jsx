@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Search, ShoppingBag, Heart, ArrowUpRight, Play, Settings, Box, Share2, Music, CheckCircle, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -10,9 +11,23 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLiked, setIsLiked] = useState(false);
   const [selectedColor, setSelectedColor] = useState('#3b82f6');
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async (query = '') => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/products${query ? `?search=${query}` : ''}`);
+      setProducts(res.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
   const handleSearch = () => {
-    if (searchQuery) alert('Searching for: ' + searchQuery);
+    fetchProducts(searchQuery);
   };
 
   return (
@@ -47,14 +62,20 @@ const Home = () => {
           >
             <Heart size={20} fill={isLiked ? "#ff4d4f" : "none"} color={isLiked ? "#ff4d4f" : "#1a1a1a"} />
           </button>
-          <Link to="/auth" className="user-profile hover:opacity-80 transition-opacity">
-            <span>Ryman Alex</span>
-            <img 
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" 
-              alt="User profile" 
-              className="user-avatar"
-            />
-          </Link>
+          {localStorage.getItem('user') ? (
+            <div className="user-profile hover:opacity-80 transition-opacity">
+              <span>{JSON.parse(localStorage.getItem('user')).username}</span>
+              <img 
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" 
+                alt="User profile" 
+                className="user-avatar"
+              />
+            </div>
+          ) : (
+            <Link to="/auth" className="user-profile hover:opacity-80 transition-opacity">
+              <span>Log In</span>
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -129,22 +150,17 @@ const Home = () => {
           </div>
 
           {/* Product Cards */}
-          <ProductCard 
-            product={{
-              id: 2,
-              title: "New Gen X-Bud",
-              image: "/white_earbuds.png"
-            }} 
-          />
-          
-          <ProductCard 
-            product={{
-              id: 3,
-              title: "Light Grey Surface Headphone",
-              subtitle: "Boosted with bass",
-              image: "/vr_headset.png"
-            }} 
-          />
+          {products.slice(0, 2).map((product) => (
+            <ProductCard 
+              key={product._id}
+              product={{
+                id: product._id,
+                title: product.title,
+                subtitle: product.aiInsight || product.category,
+                image: product.image.startsWith('http') ? product.image : `/${product.image.split('/').pop()}`
+              }} 
+            />
+          ))}
         </div>
       </div>
 
